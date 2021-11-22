@@ -57,14 +57,16 @@ const posts = [
 ];
 console.log(posts);
 
- let codeHTML = "";
+let codeAuthorImgaeHTML;
+let codeHTML = "";
+let classe;
 for(let i = 0; i < posts.length; i++){
-    codeHTML += `
+    
+    codeHTML = `
     <div class="post">
             <div class="post__header">
                 <div class="post-meta">                    
-                    <div class="post-meta__icon">
-                        <img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}">                    
+                    <div class="post-meta__icon">                    
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${posts[i].author.name}</div>
@@ -92,5 +94,34 @@ for(let i = 0; i < posts.length; i++){
             </div>            
         </div>
     `
+    document.getElementById("container").innerHTML = codeHTML;
+
+
+    codeAuthorImgaeHTML = "";
+    classe = document.getElementsByClassName("post-meta__icon");
+    // Se non c'è l'immagine
+    if(posts[i].author.image == null){
+        // Immagine = alla prima lettera del nome
+        posts[i].author.image = posts[i].author.name[0];
+
+        // Per ogni carattere del nome. Se c'è uno spazio allora la seconda lettera dell'immagine sarà il carattere dopo lo spazio
+        for(let j = 1; j < posts[i].author.name.length; j++){
+            if(posts[i].author.name[j] == " "){
+                posts[i].author.image += j + 1;
+            }
+
+        // Stampa nell'HTML le iniziali del nome al posto delle immagini
+        codeAuthorImgaeHTML = `
+        <div class="profile-pic">${posts[i].author.image}</div>
+        `
+        classe[i].innerHTML = codeAuthorImgaeHTML;
+        }
+
+    // Se invece c'è un immagine stampa nell'HTML l'immagine
+    }else{
+        codeAuthorImgaeHTML = `
+        <img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}"></img>
+        `
+        classe[i].innerHTML = codeAuthorImgaeHTML;
+    }
 }
-document.getElementById("container").innerHTML = codeHTML;
