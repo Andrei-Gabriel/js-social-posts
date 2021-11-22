@@ -62,7 +62,7 @@ let codeHTML = "";
 let classe;
 for(let i = 0; i < posts.length; i++){
     
-    codeHTML = `
+    codeHTML += `
     <div class="post">
             <div class="post__header">
                 <div class="post-meta">                    
