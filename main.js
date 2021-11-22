@@ -57,7 +57,7 @@ const posts = [
 ];
 console.log(posts);
 
-let codeAuthorImgaeHTML;
+let codeAuthorImgaeHTML = "";
 let codeHTML = "";
 let classe;
 for(let i = 0; i < posts.length; i++){
@@ -97,7 +97,6 @@ for(let i = 0; i < posts.length; i++){
     document.getElementById("container").innerHTML = codeHTML;
 
 
-    codeAuthorImgaeHTML = "";
     classe = document.getElementsByClassName("post-meta__icon");
     // Se non c'è l'immagine
     if(posts[i].author.image == null){
@@ -111,17 +110,16 @@ for(let i = 0; i < posts.length; i++){
             }
 
         // Stampa nell'HTML le iniziali del nome al posto delle immagini
-        codeAuthorImgaeHTML = `
+        codeAuthorImgaeHTML += `
         <div class="profile-pic">${posts[i].author.image}</div>
-        `
-        classe[i].innerHTML = codeAuthorImgaeHTML;
+        ` 
         }
 
     // Se invece c'è un immagine stampa nell'HTML l'immagine
     }else{
-        codeAuthorImgaeHTML = `
+        codeAuthorImgaeHTML += `
         <img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}"></img>
         `
-        classe[i].innerHTML = codeAuthorImgaeHTML;
     }
+    classe.innerHTML = codeAuthorImgaeHTML;
 }
