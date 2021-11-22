@@ -55,18 +55,41 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+
 console.log(posts);
 
-let codeAuthorImgaeHTML = "";
 let codeHTML = "";
-let classe;
+
 for(let i = 0; i < posts.length; i++){
-    
+
+    // Variabili
+    let profileImage = "";
+    let iniziali = "";
+
+    // Se c'è l'immagine allora stampala nel'HTML
+    if(posts[i].author.image != null) {
+       profileImage = `<img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}"></img>`;
+    }
+    // Altrimenti stampa le iniziali del nome
+    else{
+        // Assegna ad iniziali la prima lettera
+        iniziali = posts[i].author.name[0];
+        // Se nella stringa è presente uno spazio allora il carattere successivo sarà un'altra iniziale
+        for(let j = 1; j < posts[i].author.name.length; j++){
+            if(posts[i].author.name[j] == " "){
+                iniziali += posts[i].author.name[j+1];
+            }
+        }
+        // Stampa iniziali
+        profileImage = `<div class="profile-pic-default">${iniziali}</div>`
+    }
+
     codeHTML += `
     <div class="post">
             <div class="post__header">
                 <div class="post-meta">                    
-                    <div class="post-meta__icon">                    
+                    <div class="post-meta__icon">
+                        ${profileImage}                    
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${posts[i].author.name}</div>
@@ -95,32 +118,4 @@ for(let i = 0; i < posts.length; i++){
         </div>
     `
     document.getElementById("container").innerHTML = codeHTML;
-
-
-    classe = document.getElementsByClassName("post-meta__icon");
-    // Se non c'è l'immagine
-    if(posts[i].author.image == null){
-        // Immagine = alla prima lettera del nome
-        posts[i].author.image = posts[i].author.name[0];
-
-        // Per ogni carattere del nome. Se c'è uno spazio allora la seconda lettera dell'immagine sarà il carattere dopo lo spazio
-        for(let j = 1; j < posts[i].author.name.length; j++){
-            if(posts[i].author.name[j] == " "){
-                posts[i].author.image += j + 1;
-            }
-
-        // Stampa nell'HTML le iniziali del nome al posto delle immagini
-        codeAuthorImgaeHTML += `
-        <div class="profile-pic">${posts[i].author.image}</div>
-        ` 
-        }
-    // Se invece c'è un immagine stampa nell'HTML l'immagine
-    }else{
-        codeAuthorImgaeHTML += `
-        <img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}"></img>
-        `
-    }
-    classe.innerHTML = codeAuthorImgaeHTML;
 }
-
-// Inizio bottone
